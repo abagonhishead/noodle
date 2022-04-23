@@ -2,7 +2,18 @@
 Noodle is a small REST API that sends wake-on-LAN 'magic' UDP broadcast packets on a local network. It is written in ASP.NET Core, .NET 6 & .NET Standard 2.1.
 
 ## Using it
-The application includes Swagger. There is only a single endpoint, and it is documented at `/swagger/index.html`.
+You can trigger a magic packet by sending an HTTP POST request to /magicpacket/send with the following payload:
+````json
+{
+  "targetMacAddress": "de:ad:b3:3f:7a:c0",
+  "broadcastAddress": "10.0.0.255"
+}
+````
+Replacing `targetMacAddress` with the hardware MAC address of the target machine, and `broadcastAddress` with the IPv4 broadcast address of the subnet the machine sits on.
+
+IPv6 is not currently supported.
+
+The application includes Swagger/OpenAPI specs. -- documentation is in the usual place at `/swagger/index.html`. 
 
 ## Building/deploying it
 You should be able to build and deploy this in the normal way you build & deploy any ASP.NET Core web app. 
@@ -25,6 +36,7 @@ It is still a work-in-progress. It needs:
 - Migration of the static bootstrap class to an `IStartup` implementation or something similar
 - Move static helpers to instanced implementations (`InteropHelper`, `UnixHelper`) because nobody likes static helpers
 - Some digging to figure out if `.ListenUnixSocket()` still has that permissions bug, as the socket permissions `Task` is an awful hacky workaround. It should also probably be updated to octal 0660 instead of 0770.
+- IPv6 support
 
 I will consider contributions but please get in touch first. Don't raise a PR out of the blue!
 
