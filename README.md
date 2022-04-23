@@ -20,12 +20,14 @@ It is still a work-in-progress. It needs:
 - Unit tests
 - A tidy up of the bootstrap class 
 - Migration of the static bootstrap class to an `IStartup` implementation or something similar
+- Some digging to figure out if `.ListenUnixSocket()` still has that permissions bug, as the socket permissions `Task` is an awful hacky workaround. It should also probably be updated to octal 0660 instead of 0770.
 
-I will consider contributions but please get in touch before raising a PR out of the blue.
+I will consider contributions but please get in touch first. Don't raise a PR out of the blue!
 
 ## Licence
 This software is provided under the MIT licence (see below). You're free to clone, fork and re-use this software as you see fit. Obviously you don't have to attribute to me, but if you fork and make general improvements please consider letting me merge them in.
 
+---
 Copyright © 2022 Russell Webster, Jossellware
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
