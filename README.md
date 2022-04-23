@@ -30,7 +30,7 @@ Or a standard UNIX socket, if your distro of choice doesn't use systemd:
 
 `dotnet run Jossellware.Noodle.Web.Api.dll --unixLifetime:useSystemdSocket=false --unixLifetime:managedSocketPath=/run/noodle.sock`
 
-It just uses the standard .NET 6 configuration classes, so the above switches can also just be set in `appsettings.json` instead. 
+It uses the standard .NET 6 configuration classes, so the above switches can also be set in `appsettings.json` instead. 
 
 Obviously you'll need to point your nginx site at the socket path.
 
@@ -42,7 +42,9 @@ The most success I had with running this in a container was to use a macvlan int
 If anyone finds a better way of getting UDP broadcast packets routed across from the docker virtual interface to a hardware ethernet interface then please let me know. In the meantime, I recommend running this on a physical machine.
 
 ### Everything else
-I haven't tested this on BSD or OS X, and I've only run it on Windows while debugging, so YMMV.
+This runs fine on Windows, but I've only tested it while debugging.
+
+I haven't tested this on BSD or OS X at all, so YMMV. My BSD knowledge is limited, but BSD's routing tools might result in more success getting the packets routed from a container onto a LAN!
 
 ## Development
 It is still a work-in-progress. It needs:
