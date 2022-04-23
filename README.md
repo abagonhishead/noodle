@@ -22,7 +22,7 @@ It will run fine on Windows & Linux -- on Linux, I recommend running it behind n
 
 It will also run fine on a Linux docker container, but it requires a fair bit of configuration to get the UDP broadcast packets onto your LAN. 
 
-The most success I had with running this in a container was to use a macvlan interface (Linux only), which means the container appears as if it's directly connected to the local network, but this is a clunky solution -- docker still has to assign the containers their IP addresses, and also has to be informed of the physical network configuration. The macvlan interface also needs to be configured separately using `systemd-networkd` (or your equivalent network configurator) which makes deployment a bit more awkward.
+The most success I had with running this in a container was to use a macvlan interface (Linux-only, see: [this blog post](https://blog.oddbit.com/post/2018-03-12-using-docker-macvlan-networks/) for pointers). This means the container appears as if it's physically connected to the local network of a host interface, but this is a clunky solution -- docker still has to assign the containers their IP addresses (rather than the LAN's usual DHCP server), and also has to be informed of the physical network configuration. The macvlan interface also needs to be configured separately using `systemd-networkd` (or your equivalent network configurator). All of this makes deployment a bit more awkward.
 
 If anyone finds a better way of getting UDP broadcast packets routed across from the docker virtual interface to a hardware ethernet interface then please let me know, as I'd much rather run this in a docker container than directly on my Linux box.
 
