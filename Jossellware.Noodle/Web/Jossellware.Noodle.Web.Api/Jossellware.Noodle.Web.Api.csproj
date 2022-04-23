@@ -1,0 +1,31 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <UserSecretsId>ea38e8b1-5746-4d69-9e5b-eda39e0ceab9</UserSecretsId>
+    <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+    <DockerfileContext>..\..</DockerfileContext>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="FluentValidation" Version="10.4.0" />
+    <PackageReference Include="FluentValidation.AspNetCore" Version="10.4.0" />
+    <PackageReference Include="MediatR" Version="10.0.1" />
+    <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="10.0.1" />
+    <PackageReference Include="MicroElements.Swashbuckle.FluentValidation" Version="5.5.0" />
+    <PackageReference Include="Microsoft.Extensions.Hosting.Systemd" Version="6.0.0" />
+    <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.14.0" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Shared\Jossellware.Noodle.Shared.CQRS\Jossellware.Noodle.Shared.CQRS.csproj" />
+    <ProjectReference Include="..\..\Shared\Jossellware.Shared.AspNetCore\Jossellware.Shared.AspNetCore.csproj" />
+    <ProjectReference Include="..\..\Shared\Jossellware.Shared.Interop\Jossellware.Shared.Interop.csproj" />
+    <ProjectReference Include="..\..\Shared\Jossellware.Shared.Networking\Jossellware.Shared.Networking.csproj" />
+  </ItemGroup>
+    
+</Project>
