@@ -2,6 +2,9 @@
 Noodle is a small REST API that sends wake-on-LAN 'magic' UDP broadcast packets on a local network. It is written in ASP.NET Core, .NET 6 & .NET Standard 2.1.
 
 ## Using it
+The application includes Swagger. There is only a single endpoint, and it is documented at `/swagger/index.html`.
+
+## Building/deploying it
 You should be able to build and deploy this in the normal way you build & deploy any ASP.NET Core web app. 
 
 It will run fine on Windows & Linux -- on Linux, I recommend running it behind nginx with systemd socket activation.
