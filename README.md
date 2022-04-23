@@ -28,7 +28,7 @@ Or a standard UNIX socket, if your distro of choice doesn't use systemd:
 
 `dotnet run Jossellware.Noodle.Web.Api.dll --unixLifetime:useSystemdSocket=false --unixLifetime:managedSocketPath=/run/noodle.sock`
 
-It uses the standard .NET 6 configuration classes, so the above switches can also be set in `appsettings.json` instead. 
+It uses the standard .NET 6 configuration classes, so the above switches can also be set in `appsettings.json`. 
 
 Obviously you'll need to point your nginx site at the socket path.
 
