@@ -203,7 +203,6 @@ namespace Jossellware.Noodle.Web.Api
 		{
 			using (logger.BeginMethodScope<Bootstrap>(nameof(Bootstrap.ConfigureWebHost)))
 			{
-                
 				builder.UseKestrel((ctx, opts) =>
 				{
 					using (logger.BeginMethodScope<IWebHostBuilder>(nameof(WebHostBuilderKestrelExtensions.UseKestrel)))
