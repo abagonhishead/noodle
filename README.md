@@ -23,6 +23,7 @@ It is still a work-in-progress. It needs:
 - Unit tests
 - A tidy up of the bootstrap class 
 - Migration of the static bootstrap class to an `IStartup` implementation or something similar
+- Move static helpers to instanced implementations (`InteropHelper`, `UnixHelper`) because nobody likes static helpers
 - Some digging to figure out if `.ListenUnixSocket()` still has that permissions bug, as the socket permissions `Task` is an awful hacky workaround. It should also probably be updated to octal 0660 instead of 0770.
 
 I will consider contributions but please get in touch first. Don't raise a PR out of the blue!
