@@ -35,9 +35,11 @@ Obviously you'll need to point your nginx site at the socket path.
 ### Docker
 It will also run fine on a Linux docker container using the provided Dockerfile, but it requires a fair bit of configuration to get the UDP broadcast packets onto your LAN. 
 
-The most success I had with running this in a container was to use a macvlan interface (Linux-only, see: [this blog post](https://blog.oddbit.com/post/2018-03-12-using-docker-macvlan-networks/) for pointers). This means the container appears as if it's physically connected to the local network of a host interface, but this is a clunky solution -- docker still has to assign the containers their IP addresses (rather than the LAN's usual DHCP server), and also has to be informed of the physical network configuration. The macvlan interface also needs to be configured separately using `systemd-networkd` (or your equivalent network configurator). All of this makes deployment a bit more awkward.
+The most success I had with running this in a container was to use a macvlan interface (Linux-only, see: [this blog post](https://blog.oddbit.com/post/2018-03-12-using-docker-macvlan-networks/) for pointers). This means the container appears as if it's physically connected to the local network of a host interface, but it's a clunky solution! Rather than using your LAN's DHCP server to assign the containers their addresses, docker still has to do it, and it also has to be informed of the physical network configuration. 
 
-If anyone finds a better way of getting UDP broadcast packets routed across from the docker virtual interface to a hardware ethernet interface then please let me know. In the meantime, I recommend running this on a physical machine.
+The macvlan interface itself needs to be configured separately, too, using `systemd-networkd` (or your equivalent network configurator). All of this makes deployment a bit more awkward.
+
+If anyone finds a better way of getting UDP broadcast packets routed across from the docker virtual interface to a hardware ethernet interface then please let me know. Otherwise I recommend running this on a physical machine rather than in a container, unless you already have a macvlan-based setup.
 
 ### Everything else
 This runs fine on Windows, but I've only tested it while debugging.
