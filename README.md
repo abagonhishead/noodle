@@ -16,9 +16,7 @@ IPv6 is not currently supported.
 The application includes Swagger/OpenAPI specs. -- documentation is in the usual place at `/swagger/index.html`. 
 
 ## Building/deploying it
-You should be able to build and deploy this in the normal way you build & deploy any ASP.NET Core web app. 
-
-It will run fine on Windows & Linux.
+You should be able to build and deploy this in the normal way you build & deploy any ASP.NET Core web app. I'm not currently providing releases/builds, so you'll have to clone the repo and build it yourself for now.
 
 ## Running it
 ### Linux
