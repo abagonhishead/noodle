@@ -1,11 +1,9 @@
 ﻿namespace Jossellware.Shared.Networking.Udp
 {
-	using System;
-	using System.Collections.Generic;
-	using System.Net;
-	using System.Text;
+    using System;
+    using System.Net;
 
-	public interface IUdpDatagram
+    public interface IUdpDatagram
 	{
 		public ReadOnlySpan<byte> Data { get; }
 

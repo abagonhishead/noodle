@@ -1,12 +1,10 @@
 ﻿namespace Jossellware.Shared.Networking.Udp.Wol
 {
-	using System;
-	using System.Collections.Generic;
-	using System.Net;
-	using System.Text;
-	using Jossellware.Shared.Networking.Ip;
+    using System;
+    using System.Net;
+    using Jossellware.Shared.Networking.Ip;
 
-	public readonly struct MagicPacketDatagram : IUdpDatagram
+    public readonly struct MagicPacketDatagram : IUdpDatagram
 	{
 		public static MagicPacketDatagram Create(IPAddress broadcastAddress, MacAddress hardwareAddress)
 		{

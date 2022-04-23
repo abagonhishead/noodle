@@ -1,9 +1,8 @@
 ﻿namespace Jossellware.Shared.AspNetCore.Mapping
 {
-	using System.Collections.Concurrent;
-	using Jossellware.Shared.Mapping.Models;
+    using Jossellware.Shared.Mapping.Models;
 
-	public class ClassMapProvider : IClassMapProvider
+    public class ClassMapProvider : IClassMapProvider
 	{
 		private readonly IClassMapFactory mapFactory;
 

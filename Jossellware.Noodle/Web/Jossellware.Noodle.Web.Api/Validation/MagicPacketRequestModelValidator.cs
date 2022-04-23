@@ -1,13 +1,11 @@
 ﻿namespace Jossellware.Noodle.Web.Api.Validation
 {
-	using System.Net;
-	using System.Net.Sockets;
-	using FluentValidation;
-	using Jossellware.Noodle.Web.Api.Models;
-	using Jossellware.Shared.AspNetCore.Extensions.Validation.Fluent;
-	using Jossellware.Shared.Networking.Ip;
+    using FluentValidation;
+    using Jossellware.Noodle.Web.Api.Models;
+    using Jossellware.Shared.AspNetCore.Extensions.Validation.Fluent;
+    using Jossellware.Shared.Networking.Ip;
 
-	public class MagicPacketRequestModelValidator : AbstractValidator<MagicPacketRequestModel>
+    public class MagicPacketRequestModelValidator : AbstractValidator<MagicPacketRequestModel>
 	{
 		public MagicPacketRequestModelValidator()
 		{

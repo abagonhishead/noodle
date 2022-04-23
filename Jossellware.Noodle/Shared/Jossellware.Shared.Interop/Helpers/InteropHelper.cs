@@ -27,27 +27,9 @@ namespace Jossellware.Shared.Interop.Helpers
 			}
 		}
 
-		public static bool Is64BitOS()
-		{
-			if (RuntimeInformation.OSArchitecture == Architecture.X64 ||
-				RuntimeInformation.OSArchitecture == Architecture.Arm64)
-			{
-				return true;
-			}
+        public static bool Is64BitOS() => RuntimeInformation.OSArchitecture.ToString().EndsWith("64");
 
-			return false;
-		}
-
-		public static bool Is64BitProcess()
-		{
-			if (RuntimeInformation.ProcessArchitecture == Architecture.X64 ||
-				RuntimeInformation.ProcessArchitecture == Architecture.Arm64)
-			{
-				return true;
-			}
-
-			return false;
-		}
+        public static bool Is64BitProcess() => RuntimeInformation.ProcessArchitecture.ToString().EndsWith("64");
 
 		public static bool IsUnixLike()
 		{
