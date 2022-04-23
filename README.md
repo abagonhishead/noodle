@@ -18,15 +18,31 @@ The application includes Swagger/OpenAPI specs. -- documentation is in the usual
 ## Building/deploying it
 You should be able to build and deploy this in the normal way you build & deploy any ASP.NET Core web app. 
 
-It will run fine on Windows & Linux -- on Linux, I recommend running it behind nginx with systemd socket activation.
+It will run fine on Windows & Linux.
 
-It will also run fine on a Linux docker container, but it requires a fair bit of configuration to get the UDP broadcast packets onto your LAN. 
+## Running it
+### Linux
+I recommend running it behind nginx with either systemd socket activation:
+
+`dotnet run Jossellware.Noodle.Web.Api.dll --unixLifetime:useSystemdSocket=true`
+
+Or a standard UNIX socket, if your distro of choice doesn't use systemd:
+
+`dotnet run Jossellware.Noodle.Web.Api.dll --unixLifetime:useSystemdSocket=false --unixLifetime:managedSocketPath=/run/noodle.sock`
+
+It just uses the standard .NET 6 configuration classes, so the above switches can also just be set in `appsettings.json` instead. 
+
+Obviously you'll need to point your nginx site at the socket path.
+
+### Docker
+It will also run fine on a Linux docker container using the provided Dockerfile, but it requires a fair bit of configuration to get the UDP broadcast packets onto your LAN. 
 
 The most success I had with running this in a container was to use a macvlan interface (Linux-only, see: [this blog post](https://blog.oddbit.com/post/2018-03-12-using-docker-macvlan-networks/) for pointers). This means the container appears as if it's physically connected to the local network of a host interface, but this is a clunky solution -- docker still has to assign the containers their IP addresses (rather than the LAN's usual DHCP server), and also has to be informed of the physical network configuration. The macvlan interface also needs to be configured separately using `systemd-networkd` (or your equivalent network configurator). All of this makes deployment a bit more awkward.
 
-If anyone finds a better way of getting UDP broadcast packets routed across from the docker virtual interface to a hardware ethernet interface then please let me know, as I'd much rather run this in a docker container than directly on my Linux box.
+If anyone finds a better way of getting UDP broadcast packets routed across from the docker virtual interface to a hardware ethernet interface then please let me know. In the meantime, I recommend running this on a physical machine.
 
-I haven't tested this on BSD or OS X.
+### Everything else
+I haven't tested this on BSD or OS X, and I've only run it on Windows while debugging, so YMMV.
 
 ## Development
 It is still a work-in-progress. It needs:
@@ -34,7 +50,7 @@ It is still a work-in-progress. It needs:
 - Unit tests
 - A tidy up of the bootstrap class 
 - Migration of the static bootstrap class to an `IStartup` implementation or something similar
-- Move static helpers to instanced implementations (`InteropHelper`, `UnixHelper`) because nobody likes static helpers
+- Static helpers replacing with instanced implementations (`InteropHelper`, `UnixHelper`) because nobody likes static helpers
 - Some digging to figure out if `.ListenUnixSocket()` still has that permissions bug, as the socket permissions `Task` is an awful hacky workaround. It should also probably be updated to octal 0660 instead of 0770.
 
 In future, I plan on adding:
