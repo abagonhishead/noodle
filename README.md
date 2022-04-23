@@ -33,7 +33,7 @@ It uses the standard .NET 6 configuration classes, so the above switches can als
 Obviously you'll need to point your nginx site at the socket path.
 
 ### Docker
-It will also run fine on a Linux docker container using the provided Dockerfile, but it requires a fair bit of configuration to get the UDP broadcast packets onto your LAN. 
+It will also run fine on a Linux docker container using the provided Dockerfile, but it requires a fair bit of configuration to get the UDP broadcast packets onto your LAN, since routers will generally drop them.
 
 The most success I had with running this in a container was to use a macvlan interface (Linux-only, see: [this blog post](https://blog.oddbit.com/post/2018-03-12-using-docker-macvlan-networks/) for pointers). This means the container appears as if it's physically connected to the local network of a host interface, but it's a clunky solution! Rather than using your LAN's DHCP server to assign the containers their addresses, docker still has to do it, and it also has to be informed of the physical network configuration. 
 
