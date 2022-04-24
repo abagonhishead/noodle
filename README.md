@@ -16,17 +16,35 @@ IPv6 is not currently supported.
 The application includes Swagger/OpenAPI specs. -- documentation is in the usual place at `/swagger/index.html`. 
 
 ## Building/deploying it
-You should be able to build and deploy this in the normal way you build & deploy any ASP.NET Core web app. 
+You should be able to build and deploy this in the normal way you build & deploy any ASP.NET Core web app. I'm not currently providing releases/builds, so you'll have to clone the repo and build it yourself for now.
 
-It will run fine on Windows & Linux -- on Linux, I recommend running it behind nginx with systemd socket activation.
+## Running it
+### Linux
+I recommend running it behind nginx with either systemd socket activation:
 
-It will also run fine on a Linux docker container, but it requires a fair bit of configuration to get the UDP broadcast packets onto your LAN. 
+`dotnet run Jossellware.Noodle.Web.Api.dll --unixLifetime:useSystemdSocket=true`
 
-The most success I had with running this in a container was to use a macvlan interface (Linux only), which means the container appears as if it's directly connected to the local network, but this is a clunky solution -- docker still has to assign the containers their IP addresses, and also has to be informed of the physical network configuration. The macvlan interface also needs to be configured separately using `systemd-networkd` (or your equivalent network configurator) which makes deployment a bit more awkward.
+Or a standard UNIX socket, if your distro of choice doesn't use systemd:
 
-If anyone finds a better way of getting UDP broadcast packets routed across from the docker virtual interface to a hardware ethernet interface then please let me know, as I'd much rather run this in a docker container than directly on my Linux box.
+`dotnet run Jossellware.Noodle.Web.Api.dll --unixLifetime:useSystemdSocket=false --unixLifetime:managedSocketPath=/run/noodle.sock`
 
-I haven't tested this on BSD or OS X.
+It uses the standard .NET 6 configuration classes, so the above switches can also be set in `appsettings.json`. 
+
+Obviously you'll need to point your nginx site at the socket path.
+
+### Docker
+It will also run fine on a Linux docker container using the provided Dockerfile, but it requires a fair bit of configuration to get the UDP broadcast packets onto your LAN, since routers will generally drop them.
+
+The most success I had with running this in a container was to use a macvlan interface (Linux-only, see: [this blog post](https://blog.oddbit.com/post/2018-03-12-using-docker-macvlan-networks/) for pointers). This means the container appears as if it's physically connected to the local network of a host interface, but it's a clunky solution! Rather than using your LAN's DHCP server to assign the containers their addresses, docker still has to do it, and it also has to be informed of the physical network configuration. 
+
+The macvlan interface itself needs to be configured separately, too, using `systemd-networkd` (or your equivalent network configurator). All of this makes deployment a bit more awkward.
+
+If anyone finds a better way of getting UDP broadcast packets routed across from the docker virtual interface to a hardware ethernet interface then please let me know. Otherwise I recommend running this on a physical machine rather than in a container, unless you already have a macvlan-based setup.
+
+### Everything else
+This runs fine on Windows, but I've only tested it while debugging.
+
+I haven't tested this on BSD or OS X at all, so YMMV. My BSD knowledge is limited, but BSD's routing tools might result in more success getting the packets routed from a container onto a LAN!
 
 ## Development
 It is still a work-in-progress. It needs:
@@ -34,9 +52,14 @@ It is still a work-in-progress. It needs:
 - Unit tests
 - A tidy up of the bootstrap class 
 - Migration of the static bootstrap class to an `IStartup` implementation or something similar
-- Move static helpers to instanced implementations (`InteropHelper`, `UnixHelper`) because nobody likes static helpers
+- Static helpers replacing with instanced implementations (`InteropHelper`, `UnixHelper`) because nobody likes static helpers
 - Some digging to figure out if `.ListenUnixSocket()` still has that permissions bug, as the socket permissions `Task` is an awful hacky workaround. It should also probably be updated to octal 0660 instead of 0770.
+
+In future, I plan on adding:
+- Builds/releases
+- An accompanying command-line application for sending the packets directly
 - IPv6 support
+- Possibly a gRPC API
 
 I will consider contributions but please get in touch first. Don't raise a PR out of the blue!
 
